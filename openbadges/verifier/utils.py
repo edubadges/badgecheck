@@ -15,6 +15,8 @@ import requests_cache
 from pyld.jsonld import JsonLdError
 from collections import OrderedDict
 
+from datetime import datetime
+
 
 MESSAGE_LEVEL_ERROR = 'ERROR'
 MESSAGE_LEVEL_WARNING = 'WARNING'
@@ -168,3 +170,12 @@ def get_extensions(verification_results):
             except ValueError:
                 pass
         return extensions
+
+def get_day_only(time_string):
+    if time_string:
+        return time_string.split('T')[0]
+
+def date_to_readable_format(date):
+    if date:
+        dt = datetime.strptime(date, '%Y-%m-%d')
+        return dt.strftime('%d %b %Y')

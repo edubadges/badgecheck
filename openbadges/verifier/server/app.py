@@ -64,7 +64,7 @@ def results():
 
     assertion_image = utils.get_assertion_image(verification_results, assertion_image_url)
     extensions = utils.get_extensions(verification_results)
-    has_expired = datetime.strptime(assertion_data.get('expires').split('T')[0], '%Y-%m-%d').date() < date.today() if assertion_data.get('expires', False) else False
+    has_expired = datetime.strptime(utils.get_day_only(assertion_data.get('expires')), '%Y-%m-%d').date() < date.today() if assertion_data.get('expires', False) else False
 
     if request_wants_json():
         return json.dumps(verification_results, indent=4), 200, {'Content-Type': 'application/json'}
@@ -77,6 +77,8 @@ def results():
         badgeclass_data=badgeclass_data,
         issuer_data=issuer_data,
         has_expired=has_expired,
+        expires=utils.date_to_readable_format(utils.get_day_only(assertion_data.get('expires', None))),
+        issued_on=utils.date_to_readable_format(utils.get_day_only(assertion_data.get('issuedOn', None))),
         assertion_data=assertion_data,
         assertion_image=assertion_image,
         extensions=extensions)
