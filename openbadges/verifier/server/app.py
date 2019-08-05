@@ -1,6 +1,7 @@
 from flask import Flask, redirect, render_template, request
 import json
 import six
+from datetime import date, datetime
 
 from openbadges.verifier import verify, utils
 
@@ -63,6 +64,7 @@ def results():
 
     assertion_image = utils.get_assertion_image(verification_results, assertion_image_url)
     extensions = utils.get_extensions(verification_results)
+    has_expired = datetime.strptime(assertion_data.get('expires').split('T')[0], '%Y-%m-%d').date() < date.today() if assertion_data.get('expires', False) else False
 
     if request_wants_json():
         return json.dumps(verification_results, indent=4), 200, {'Content-Type': 'application/json'}
@@ -74,6 +76,7 @@ def results():
         eduid_given=eduid_given,
         badgeclass_data=badgeclass_data,
         issuer_data=issuer_data,
+        has_expired=has_expired,
         assertion_data=assertion_data,
         assertion_image=assertion_image,
         extensions=extensions)

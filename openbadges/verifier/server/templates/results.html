@@ -71,6 +71,30 @@
 			</div>
 			<div class="col-md-10">{{ assertion_data.get('issuedOn') }}</div>
 		</div>
+		{% if assertion_data.get('expires', False) %}
+			{% if has_expired %}
+				<div class="row top-buffer">
+					<div class="col-md-2">
+						<strong style="color:red;">Expired at</strong>
+					</div>
+					<div style="color:red;" class="col-md-10">{{ assertion_data.get('expires') }}</div>
+				</div>
+			{% else %}
+				<div class="row top-buffer">
+					<div class="col-md-2">
+						<strong>Expires at</strong>
+					</div>
+					<div class="col-md-10">{{ assertion_data.get('expires') }}</div>
+				</div>
+			{% endif %}
+		{% else %}
+			<div class="row top-buffer">
+				<div class="col-md-2">
+					<strong>Expires at</strong>
+				</div>
+				<div class="col-md-10">Has no expiration date</div>
+			</div>
+		{% endif %}
 		<div class="row top-buffer">
 			<div class="col-md-2"></div>
 			<div class="col-md-10">
