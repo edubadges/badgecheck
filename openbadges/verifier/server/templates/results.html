@@ -96,6 +96,13 @@
 			</div>
 		{% endif %}
 		<div class="row top-buffer">
+			<div class="col-md-2">
+				<strong>Type</strong>
+			</div>
+			<div class="col-md-10">{{ assertion_data.get('verification', {}).get('type') }}</div>
+		</div>
+
+		<div class="row top-buffer">
 			<div class="col-md-2"></div>
 			{% if assertion_data.get('verification', {}).get('type') == 'HostedBadge' %}
 				<div class="col-md-10">
